@@ -1,0 +1,11 @@
+
+place "Zayan Village" {
+
+    type village;
+
+    level "Zayan_Village_inside" current;
+
+    level "Zayan_Village_blacksmith";
+
+    level "Zayan_Village_blacksmith";
+}
