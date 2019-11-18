@@ -73,6 +73,4 @@ public class Place {
         return type;
     }
 
-    
-
 }

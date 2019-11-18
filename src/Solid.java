@@ -11,37 +11,36 @@ public class Solid extends SceneObject{
     private Sprite sprite;
 
 
-    private Solid(int x, int y, int xaxis, int yaxis, int width, int height){//, RenderStrategy scenery){
+    private Solid(int x, int y, int xaxis, int yaxis, int width, int height){
         this.X = x;
         this.x = x + xaxis;
         this.Y = y;
         this.y = y + yaxis;
         this.width = width;
         this.height = height;
-        //this.scenery = scenery;
     }
 
-    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Color color){// RenderStrategy scenery){
-        this(x, y, xaxis, yaxis, width, height);//, scenery);
+    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Color color){
+        this(x, y, xaxis, yaxis, width, height);
         this.color = color;
         this.colliding = true;
     }
 
-    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Color color, boolean colliding){//, RenderStrategy scenery){
-        this(x, y, xaxis, yaxis, width, height);//, scenery);
+    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Color color, boolean colliding){
+        this(x, y, xaxis, yaxis, width, height);
         this.color = color;
         this.colliding = colliding;
     }
 
-    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Sprite sprite, int render_flag){//, RenderStrategy scenery){
-        this(x, y, xaxis, yaxis, width, height);//, scenery);
+    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Sprite sprite, int render_flag){
+        this(x, y, xaxis, yaxis, width, height);
         this.sprite = sprite;
         this.render_flag = render_flag;
         this.colliding = true;
     }
 
-    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Sprite sprite, int render_flag, boolean colliding){//, RenderStrategy scenery){
-        this(x, y, xaxis, yaxis, width, height);//, scenery);
+    public Solid(int x, int y, int xaxis, int yaxis, int width, int height, Sprite sprite, int render_flag, boolean colliding){
+        this(x, y, xaxis, yaxis, width, height);
         this.sprite = sprite;
         this.render_flag = render_flag;
         this.colliding = colliding;
@@ -50,24 +49,24 @@ public class Solid extends SceneObject{
     @Override
     public void render(Graphics2D g2d) {
         if(sprite == null){
-            g2d.setColor(color);
-            g2d.fillRect(x, y, width, height);
+            RenderStrategy.getStrategy().setColor(color);
+            RenderStrategy.getStrategy().fillRect(x, y, width, height);
         }
         else{
             if(render_flag == ObjectStatus.TILED){
                 for(int i = x; i < getXOffset(); i += sprite.getWidth()){
                     for(int j = y; j < getYOffset(); j += sprite.getHeight()){
-                        sprite.render(i, j, sprite.getWidth(), sprite.getHeight(), g2d);
+                        sprite.render(i, j, sprite.getWidth(), sprite.getHeight());
                     }
                 }
             }
             else if(render_flag == ObjectStatus.ONLY_ONE){
-                sprite.render(x, y, getXOffset(), getYOffset(), g2d);
+                sprite.render(x, y, getXOffset(), getYOffset());
             }
             else if(render_flag == ObjectStatus.TILED_ANIMATED){
                 for(int i = x, k = 0; i < getXOffset(); i += sprite.getFrameWidth()){
                     for(int j = y; j < getYOffset(); j += sprite.getFrameHeight()){
-                        sprite.animate(i, j, i+sprite.getFrameWidth(), j+sprite.getFrameHeight(), k, g2d);
+                        sprite.animate(i, j, i+sprite.getFrameWidth(), j+sprite.getFrameHeight(), k);
                     }
                     if(k == 0) k++;
                 }
@@ -138,16 +137,11 @@ public class Solid extends SceneObject{
         int[] results = new int[3];
 
         if(EventHandler.isUp() && x < getXOffset() && xoffset > getX()){
-
           if(y-10 < getYOffset() && yoffset > getY()){
 
             results[0] = 1;
             results[1] = getYOffset();
             results[2] = 1;
-          }
-          else{
-            results[0] = 0;
-            results[2] = 0;
           }
             
         }
@@ -158,10 +152,6 @@ public class Solid extends SceneObject{
             results[1] = getY();
             results[2] = 3;
           }
-          else{
-            results[0] = 0;
-            results[2] = 0;
-          }
           
         }
         else if(EventHandler.isLeft() && y < getYOffset() && yoffset > getY()){
@@ -171,10 +161,6 @@ public class Solid extends SceneObject{
             results[1] = getXOffset();
             results[2] = 4;
           }
-          else{
-            results[0] = 0;
-            results[2] = 0;
-          }
           
         }
         else if(EventHandler.isRight() && y < getYOffset() && yoffset > getY()){
@@ -183,10 +169,6 @@ public class Solid extends SceneObject{
             results[0] = 1;
             results[1] = getX();
             results[2] = 2;
-          }
-          else{
-            results[0] = 0;
-            results[2] = 0;
           }
           
         }

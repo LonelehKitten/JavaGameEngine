@@ -10,8 +10,6 @@ public class Scene {
 
     private boolean current;
     private Map<String, Solid> solid = new HashMap<>();
-    //private RenderStrategy scenery = new RenderStrategy(0, 0, BufferedImage.TYPE_INT_ARGB);
-
 
     public Scene(int xaxis, int yaxis){
         this.xaxis = Camera.getX() + xaxis;
@@ -101,22 +99,22 @@ public class Scene {
 
 
     public Scene addSolid(String name, int x, int y, int width, int height, Color color){
-        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, color));//, scenery));
+        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, color));
         return this;
     }
 
     public Scene addSolid(String name, int x, int y, int width, int height, Color color, boolean is_colliding){
-        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, color, is_colliding));//, scenery));
+        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, color, is_colliding));
         return this;
     }
 
     public Scene addSolid(String name, int x, int y, int width, int height, Sprite sprite, int render_flag){
-        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, sprite, render_flag));//, scenery));
+        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, sprite, render_flag));
         return this;
     }
 
     public Scene addSolid(String name, int x, int y, int width, int height, Sprite sprite, int render_flag, boolean is_colliding){
-        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, sprite, render_flag, is_colliding));//, scenery));
+        solid.put(name, new Solid(x, y, xaxis, yaxis, width, height, sprite, render_flag, is_colliding));
         return this;
     }
 

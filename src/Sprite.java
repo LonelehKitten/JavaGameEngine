@@ -13,8 +13,6 @@ public class Sprite {
 
     private Map<Integer, int[][]> animation_pattern = new HashMap<>();
 
-    private RenderStrategy scenery;
-
     public Sprite(String path){
         try {
             this.image = ImageIO.read(new File(path));
@@ -33,17 +31,26 @@ public class Sprite {
         this.step = 0;
     }
 
-    public Sprite(String path, RenderStrategy scenery){
-        this(path);
-        this.scenery = scenery;
+    public void render(int x, int y, int xoffset, int yoffset){
+        RenderStrategy.add(image, x, y, xoffset, yoffset, null);
     }
 
-    public void render(int x, int y, int xoffset, int yoffset, Graphics2D g2d){
-        g2d.drawImage(image, x, y, xoffset, yoffset, null);
+    public void render(int x, int y, int xoffset, int yoffset, int framex, int framey){
+        RenderStrategy.add(
+                image,
+                x,
+                y,
+                xoffset,
+                yoffset,
+                (framex*frameWidth)-frameWidth,
+                (framey*frameHeight)-frameHeight,
+                (framex*frameWidth),
+                (framey*frameHeight),
+                null);
     }
 
-    public void animate(int x, int y, int xoffset, int yoffset, int animation, Graphics2D g2d){
-        g2d.drawImage(
+    public void animate(int x, int y, int xoffset, int yoffset, int animation){
+        RenderStrategy.add(
                 image,
                 x,
                 y,

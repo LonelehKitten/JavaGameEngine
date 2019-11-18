@@ -23,11 +23,11 @@ public class Game extends Canvas {
 
     private GameLoop gameloop = new GameLoop(this);
     private EventHandler eventHandler = new EventHandler();
+    private RenderStrategy renderStrategy = new RenderStrategy(this, 0);
 
     private Camera camera = new Camera();
 
     private Place place;
-
 
 
     public Game(){
@@ -129,16 +129,16 @@ public class Game extends Canvas {
 
                 switch(e.getKeyCode()){
                     case KeyEvent.VK_W:
-                        eventHandler.setUp(true); player.setDirection(1);
+                        eventHandler.setUp(true);
                         break;
                     case KeyEvent.VK_A:
-                        eventHandler.setLeft(true); player.setDirection(2);
+                        eventHandler.setLeft(true);
                         break;
                     case KeyEvent.VK_S:
-                        eventHandler.setDown(true); player.setDirection(3);
+                        eventHandler.setDown(true);
                         break;
                     case KeyEvent.VK_D:
-                        eventHandler.setRight(true); player.setDirection(4);
+                        eventHandler.setRight(true);
                         break;
 
                 }
@@ -229,7 +229,9 @@ public class Game extends Canvas {
         }
     }
 
-    public void render(){
+    protected void render(){
+
+        //Graphics2D g2d = (Graphics2D) g;
         
         if(bufferStrategy == null){
           createBufferStrategy(3);
@@ -237,16 +239,19 @@ public class Game extends Canvas {
         }
 
         bufferStrategy = getBufferStrategy();
-
         Graphics2D g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
 
-        g2d.setColor(new Color(255, 255, 255));
-        g2d.fillRect(0, 0, IConfig.MONITOR_WIDTH, IConfig.MONITOR_HEIGHT);
-
-        place.render(g2d);
-        player.render(g2d);
+        renderStrategy.render(this, g2d);
 
         g2d.dispose();
         if(!bufferStrategy.contentsLost()) bufferStrategy.show();
+    }
+
+    public Place getPlace(){
+        return place;
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 }
